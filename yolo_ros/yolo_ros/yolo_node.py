@@ -302,20 +302,31 @@ class YoloNode(LifecycleNode):
 
             msg_array = KeyPoint2DArray()
 
-            if points.conf is None:
-                continue
+            if points.conf is not None:
+                for kp_id, (p, conf) in enumerate(zip(points.xy[0], points.conf[0])):
 
-            for kp_id, (p, conf) in enumerate(zip(points.xy[0], points.conf[0])):
+                    if conf >= self.threshold:
+                        msg = KeyPoint2D()
 
-                if conf >= self.threshold:
-                    msg = KeyPoint2D()
+                        msg.id = kp_id + 1
+                        msg.point.x = float(p[0])
+                        msg.point.y = float(p[1])
+                        msg.score = float(conf)
 
-                    msg.id = kp_id + 1
-                    msg.point.x = float(p[0])
-                    msg.point.y = float(p[1])
-                    msg.score = float(conf)
+                        msg_array.data.append(msg)
+            else:
+                for kp_id, p in enumerate(points.xy[0]):
+                    conf = 1.0
 
-                    msg_array.data.append(msg)
+                    if conf >= self.threshold:
+                        msg = KeyPoint2D()
+
+                        msg.id = kp_id + 1
+                        msg.point.x = float(p[0])
+                        msg.point.y = float(p[1])
+                        msg.score = float(conf)
+
+                        msg_array.data.append(msg)
 
             keypoints_list.append(msg_array)
 

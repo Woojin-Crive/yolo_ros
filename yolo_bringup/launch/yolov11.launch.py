@@ -35,18 +35,20 @@ def generate_launch_description():
                     )
                 ),
                 launch_arguments={
-                    "model": LaunchConfiguration("model", default="yolo11m.pt"),
+                    "model": LaunchConfiguration("model", default="/workspace/best.pt"),
                     "tracker": LaunchConfiguration("tracker", default="bytetrack.yaml"),
                     "device": LaunchConfiguration("device", default="cuda:0"),
                     "enable": LaunchConfiguration("enable", default="True"),
                     "threshold": LaunchConfiguration("threshold", default="0.5"),
                     "input_image_topic": LaunchConfiguration(
-                        "input_image_topic", default="/camera/rgb/image_raw"
+                        "input_image_topic", default="/camera/camera/color/image_rect_raw"
                     ),
                     "image_reliability": LaunchConfiguration(
                         "image_reliability", default="2"
                     ),
                     "namespace": LaunchConfiguration("namespace", default="yolo"),
+                    "use_tracking": LaunchConfiguration("use_tracking", default="False"),
+                    "use_3d": LaunchConfiguration("use_3d", default="False"),
                 }.items(),
             )
         ]

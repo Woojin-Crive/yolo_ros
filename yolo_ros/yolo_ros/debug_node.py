@@ -250,8 +250,8 @@ class DebugNode(LifecycleNode):
             return None
 
         for i, sk in enumerate(ann.skeleton):
-            kp1_pos = get_pk_pose(sk[0])
-            kp2_pos = get_pk_pose(sk[1])
+            kp1_pos = get_pk_pose(i)
+            kp2_pos = get_pk_pose(i+1)
 
             if kp1_pos is not None and kp2_pos is not None:
                 cv2.line(
